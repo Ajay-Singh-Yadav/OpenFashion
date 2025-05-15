@@ -1,0 +1,25 @@
+{
+  "migIndex": 1,
+  "data": [
+    {
+      "path": "assests/fonts/BodoniModa_28pt-BlackItalic.ttf",
+      "sha1": "74e76a777bb1bf271e1b33fc55892408486e65df"
+    },
+    {
+      "path": "assests/fonts/BodoniModa_28pt-BoldItalic.ttf",
+      "sha1": "c84411ea7e5ce7f13e1b2242212dff123a18deae"
+    },
+    {
+      "path": "assests/fonts/BodoniModa_28pt-MediumItalic.ttf",
+      "sha1": "521537efb0de2b4f8a702f8b2b9fd06f21aedd96"
+    },
+    {
+      "path": "assests/fonts/BodoniModa_28pt-Regular.ttf",
+      "sha1": "12e81a8e6adedb30c94073e8c1e4ac4ceb41d6fd"
+    },
+    {
+      "path": "assests/fonts/TenorSans-Regular.ttf",
+      "sha1": "9e8b5d8350c5310fed548e56baab4900f651ad6d"
+    }
+  ]
+}
