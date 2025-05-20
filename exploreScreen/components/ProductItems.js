@@ -42,6 +42,7 @@ const ProductItems = () => {
       <TouchableOpacity
         onPress={() =>
           navigation.navigate('ProductList', {
+            id: item.id,
             name: item.title,
             price: item.price,
             image: item.image,

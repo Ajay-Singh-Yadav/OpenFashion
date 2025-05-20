@@ -1,12 +1,27 @@
 import React from 'react';
-import {View, FlatList, Text, Image, StyleSheet} from 'react-native';
-import {useSelector} from 'react-redux';
+import {
+  View,
+  FlatList,
+  Text,
+  Image,
+  StyleSheet,
+  ScrollView,
+  TouchableOpacity,
+} from 'react-native';
+import {useDispatch, useSelector} from 'react-redux';
+import {increaseQuantity, decreaseQuantity} from '../../store/slice/cartSlice';
+import AntDesign from 'react-native-vector-icons/AntDesign';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const CartItems = () => {
   const cartItems = useSelector(state => state.cart.items);
+  const dispatch = useDispatch();
   console.log(cartItems);
 
-  const totalPrice = cartItems.reduce((sum, item) => sum + item.price, 0);
+  const totalPrice = cartItems.reduce(
+    (sum, item) => sum + item.price * item.quantity,
+    0,
+  );
   const renderItem = ({item}) => (
     <View style={styles.cartItem}>
       <View
@@ -20,7 +35,53 @@ const CartItems = () => {
       </View>
       <View style={styles.details}>
         <Text style={styles.name}>{item.name}</Text>
+
         <Text style={styles.name2}>Recycle Boucle Knit Cardigan Pink</Text>
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'flex-start',
+            marginTop: 15,
+          }}>
+          <TouchableOpacity
+            onPress={() => dispatch(decreaseQuantity({name: item.name}))}>
+            <View
+              style={{
+                width: 27,
+                height: 27,
+                borderRadius: 15,
+                borderWidth: 1,
+                alignItems: 'center',
+                justifyContent: 'center',
+                marginRight: 20,
+              }}>
+              <AntDesign name="minus" size={12} />
+            </View>
+          </TouchableOpacity>
+          <Text
+            style={{
+              fontSize: 16,
+              fontFamily: 'TenorSans-Regular',
+              marginRight: 20,
+            }}>
+            {item.quantity}
+          </Text>
+          <TouchableOpacity
+            onPress={() => dispatch(increaseQuantity({name: item.name}))}>
+            <View
+              style={{
+                width: 27,
+                height: 27,
+                borderRadius: 15,
+                borderWidth: 1,
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}>
+              <Ionicons name="add" size={12} />
+            </View>
+          </TouchableOpacity>
+        </View>
         <Text style={styles.price}>${item.price}</Text>
       </View>
     </View>
@@ -33,94 +94,95 @@ const CartItems = () => {
         style={{width: 150, height: 15, marginBottom: 30}}
       />
       <View style={styles.scrollContainer}>
-        {cartItems.length === 0 ? (
-          <Text style={styles.emptyText}>Your cart is empty</Text>
-        ) : (
-          <FlatList
-            data={cartItems}
-            renderItem={renderItem}
-            keyExtractor={index => index.toString()}
-            showsVerticalScrollIndicator={false}
+        <ScrollView>
+          {cartItems.length === 0 ? (
+            <Text style={styles.emptyText}>Your cart is empty</Text>
+          ) : (
+            <FlatList
+              data={cartItems}
+              renderItem={renderItem}
+              keyExtractor={index => index.toString()}
+              showsVerticalScrollIndicator={false}
+              scrollEnabled={false}
+            />
+          )}
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              marginRight: 90,
+              marginTop: 10,
+            }}>
+            <Image
+              source={require('../../assests/images/cartscreen/Voucher.png')}
+              style={{width: 34, height: 33}}
+            />
+            <Text
+              style={{
+                fontSize: 18,
+                fontFamily: 'TenorSans-Regular',
+                opacity: 0.7,
+                marginRight: 30,
+              }}>
+              Add promo code
+            </Text>
+          </View>
+
+          <View
+            style={{
+              marginTop: 15,
+              borderWidth: 0.4,
+              width: 350,
+              borderColor: '#BABABA',
+            }}
           />
-        )}
+
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              marginRight: 20,
+              marginTop: 15,
+            }}>
+            <Image
+              source={require('../../assests/images/cartscreen/delivery.png')}
+              style={{width: 28, height: 35}}
+            />
+            <Text
+              style={{
+                fontSize: 18,
+                marginLeft: 20,
+                fontFamily: 'TenorSans-Regular',
+                opacity: 0.7,
+                marginRight: 30,
+              }}>
+              Delivery
+            </Text>
+            <Text
+              style={{
+                fontSize: 18,
+                marginLeft: 20,
+                fontFamily: 'TenorSans-Regular',
+                opacity: 0.3,
+                marginLeft: 90,
+              }}>
+              Free
+            </Text>
+          </View>
+          <View
+            style={{
+              marginTop: 15,
+              borderWidth: 0.4,
+              width: 350,
+              borderColor: '#BABABA',
+            }}
+          />
+        </ScrollView>
       </View>
 
-      <View
-        style={{
-          flexDirection: 'row',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          marginRight: 70,
-          marginTop: 10,
-        }}>
-        <Image
-          source={require('../../assests/images/cartscreen/Voucher.png')}
-          style={{width: 34, height: 33}}
-        />
-        <Text
-          style={{
-            fontSize: 18,
-            marginLeft: 20,
-            fontFamily: 'TenorSans-Regular',
-            opacity: 0.7,
-            marginRight: 30,
-          }}>
-          Add promo code
-        </Text>
-      </View>
-
-      <View
-        style={{
-          marginTop: 15,
-          borderWidth: 0.4,
-          width: 350,
-          borderColor: '#BABABA',
-        }}
-      />
-
-      <View
-        style={{
-          flexDirection: 'row',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          marginRight: 20,
-          marginTop: 15,
-        }}>
-        <Image
-          source={require('../../assests/images/cartscreen/delivery.png')}
-          style={{width: 28, height: 35}}
-        />
-        <Text
-          style={{
-            fontSize: 18,
-            marginLeft: 20,
-            fontFamily: 'TenorSans-Regular',
-            opacity: 0.7,
-            marginRight: 30,
-          }}>
-          Delivery
-        </Text>
-        <Text
-          style={{
-            fontSize: 18,
-            marginLeft: 20,
-            fontFamily: 'TenorSans-Regular',
-            opacity: 0.3,
-            marginLeft: 90,
-          }}>
-          Free
-        </Text>
-      </View>
-      <View
-        style={{
-          marginTop: 15,
-          borderWidth: 0.4,
-          width: 350,
-          borderColor: '#BABABA',
-        }}
-      />
-
-      <View style={{width: '100%', marginTop: 70}}>
+      <View style={{width: '100%', marginTop: 50}}>
         <View
           style={{
             padding: 15,
@@ -184,7 +246,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   scrollContainer: {
-    height: 350, // Adjust as needed (40% of screen height)
+    height: 500, // Adjust as needed (40% of screen height)
     width: '100%',
     paddingHorizontal: 16,
   },

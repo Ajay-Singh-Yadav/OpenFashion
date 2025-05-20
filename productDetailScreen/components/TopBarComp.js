@@ -1,9 +1,12 @@
 import {useNavigation} from '@react-navigation/native';
 import React from 'react';
-import {Image, StyleSheet, TouchableOpacity, View} from 'react-native';
+import {Image, StyleSheet, TouchableOpacity, View, Text} from 'react-native';
+import {useSelector} from 'react-redux';
 
 const TopBarComp = () => {
   const navigation = useNavigation();
+  const cartItems = useSelector(state => state.cart.items);
+  const itemCount = cartItems.length;
   return (
     <View style={[styles.row, {margin: 20}]}>
       <Image
@@ -23,10 +26,17 @@ const TopBarComp = () => {
         />
 
         <TouchableOpacity onPress={() => navigation.navigate('Cart')}>
-          <Image
-            source={require('../../assests/images/shoppingBag.png')}
-            style={{height: 30, width: 30, marginLeft: 10}}
-          />
+          <View style={{position: 'relative'}}>
+            <Image
+              source={require('../../assests/images/shoppingBag.png')}
+              style={{height: 30, width: 30, marginLeft: 10}}
+            />
+            {itemCount > 0 && (
+              <View style={styles.badge}>
+                <Text style={styles.badgeText}>{itemCount}</Text>
+              </View>
+            )}
+          </View>
         </TouchableOpacity>
       </View>
     </View>
@@ -41,5 +51,22 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     height: 30,
     justifyContent: 'space-between',
+  },
+  badge: {
+    position: 'absolute',
+    right: -5,
+    top: -5,
+    backgroundColor: 'red',
+    borderRadius: 10,
+    minWidth: 18,
+    height: 18,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: 4,
+  },
+  badgeText: {
+    color: 'white',
+    fontSize: 10,
+    fontWeight: 'bold',
   },
 });
