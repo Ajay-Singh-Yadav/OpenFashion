@@ -16,15 +16,17 @@ import TopBarComp from '../Components/TopBarComp';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {SafeAreaView} from 'react-native-safe-area-context';
+import {useNavigation} from '@react-navigation/native';
 
 export default function ProductListGridScreen() {
+  const navigation = useNavigation();
   const [isGridView, setIsGridView] = useState(true);
   const screenWidth = Dimensions.get('window').width;
   const gridItemWidth = (screenWidth - 30) / 2;
 
   //  Grid View
   const renderGridItem = ({item}) => (
-    <TouchableOpacity>
+    <TouchableOpacity onPress={() => navigation.navigate('ProductScreen')}>
       <View style={[styles.gridItem, {width: gridItemWidth}]}>
         <ImageBackground
           source={item.image}

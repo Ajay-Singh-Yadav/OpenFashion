@@ -12,6 +12,8 @@ import ProductDrawer from './exploreScreen/DrawerNav/ProductDrawer';
 import SplashScreen from './src/Screens/SplashScreen';
 import HomeScreen from './src/Screens/HomeScreen';
 import ProductListGridScreen from './src/Screens/ProductListGridScreen';
+import ProductDetailsScreen from './src/Screens/ProductDetailsScreen';
+import ProductCartScreen from './src/Screens/ProductCartScreen';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -21,6 +23,8 @@ const MainStack = () => (
     <Stack.Screen name="Splash" component={SplashScreen} />
     <Stack.Screen name="Home" component={HomeScreen} />
     <Stack.Screen name="ListGrid" component={ProductListGridScreen} />
+    <Stack.Screen name="ProductScreen" component={ProductDetailsScreen} />
+    <Stack.Screen name="CartScreen" component={ProductCartScreen} />
   </Stack.Navigator>
 );
 const App = () => {
