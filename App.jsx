@@ -1,20 +1,17 @@
 import React from 'react';
-import HomeScreen from './homeScreen/HomeScreen';
-import BlogScreen from './blogScreen/BlogScreen';
+
 import {createStackNavigator} from '@react-navigation/stack';
 import {NavigationContainer} from '@react-navigation/native';
-import ProducDetailScreen from './productDetailScreen/ProductDetailScreen';
+
 import {Provider} from 'react-redux';
 import {store} from './store/store';
-import CartScreen from './cartScreen/CartScreen';
-import ExploreScreen from './exploreScreen/ExploreScreen';
+
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import ProductDrawer from './exploreScreen/DrawerNav/ProductDrawer';
-import DeliveryScreen from './deliveryScreen/DeliveryScreen';
-import AddAddressScreen from './deliveryScreen/AddAddressScreen';
-import SplashScreen from './splashScreen/SplashScreen';
-import LoginScreen from './authScreen/loginScreen/LoginScreen';
-import RegisterScreen from './authScreen/registerScreen/RegisterScreen';
+
+import SplashScreen from './src/Screens/SplashScreen';
+import HomeScreen from './src/Screens/HomeScreen';
+import ProductListGridScreen from './src/Screens/ProductListGridScreen';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -22,16 +19,8 @@ const Drawer = createDrawerNavigator();
 const MainStack = () => (
   <Stack.Navigator screenOptions={{headerShown: false}}>
     <Stack.Screen name="Splash" component={SplashScreen} />
-    <Stack.Screen name="Login" component={LoginScreen} />
-    <Stack.Screen name="Register" component={RegisterScreen} />
     <Stack.Screen name="Home" component={HomeScreen} />
-    <Stack.Screen name="Blog" component={BlogScreen} />
-    <Stack.Screen name="ProductList" component={ProducDetailScreen} />
-    <Stack.Screen name="Cart" component={CartScreen} />
-    <Stack.Screen name="Explore" component={ExploreScreen} />
-    <Stack.Screen name="Delivery" component={DeliveryScreen} />
-
-    <Stack.Screen name="AddAddress" component={AddAddressScreen} />
+    <Stack.Screen name="ListGrid" component={ProductListGridScreen} />
   </Stack.Navigator>
 );
 const App = () => {
