@@ -1,4 +1,4 @@
-import {useNavigation} from '@react-navigation/native';
+import {DrawerActions, useNavigation} from '@react-navigation/native';
 import React from 'react';
 import {Image, StyleSheet, TouchableOpacity, View, Text} from 'react-native';
 import {useSelector} from 'react-redux';
@@ -9,10 +9,13 @@ const TopBarComp = () => {
   const itemCount = cartItems.length;
   return (
     <View style={[styles.row, {margin: 20}]}>
-      <Image
-        source={require('../../assests/images/Menu.png')}
-        style={{height: 30, width: 30}}
-      />
+      <TouchableOpacity
+        onPress={() => navigation.dispatch(DrawerActions.openDrawer)}>
+        <Image
+          source={require('../../assests/images/Menu.png')}
+          style={{height: 30, width: 30}}
+        />
+      </TouchableOpacity>
 
       <Image
         source={require('../../assests/images/Logo.png')}

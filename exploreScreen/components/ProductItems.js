@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   Text,
@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import {products} from './ProductList';
 import {FlatList} from 'react-native-gesture-handler';
-import {useNavigation} from '@react-navigation/native';
+import {useNavigation, useRoute} from '@react-navigation/native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import FollowUsComp from '../../homeScreen/components/FollowUsComp';
 import ListView from '../../assests/images/explore/Listview.png';
@@ -23,6 +23,14 @@ const itemWidth = width / 2 - 20;
 
 const ProductItems = () => {
   const [isGrid, setIsGrid] = useState(true);
+  const route = useRoute();
+  const [selectedFilter, setSeletedFilter] = useState(null);
+
+  useEffect(() => {
+    if (route.params?.type) {
+      setSeletedFilter(route.params.type);
+    }
+  }, [route.params?.type]);
 
   const repeatedProducts = Array.from({length: 5}).flatMap((_, index) =>
     products.map(product => ({
@@ -30,6 +38,10 @@ const ProductItems = () => {
       id: `${product.id}-${index}`,
     })),
   );
+
+  const filteredProducts = selectedFilter
+    ? repeatedProducts.filter(product => product.type === selectedFilter)
+    : repeatedProducts;
 
   const navigation = useNavigation();
 
@@ -295,10 +307,32 @@ const ProductItems = () => {
           <Image source={Filter} style={{width: 30, height: 30}} />
         </View>
       </View>
+
+      {selectedFilter && (
+        <TouchableOpacity onPress={() => setSeletedFilter(null)}>
+          <View
+            style={{
+              flexDirection: 'row',
+              marginBottom: 10,
+              marginLeft: 20,
+              height: 40,
+              width: 110,
+              borderRadius: 20,
+              borderWidth: 1,
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}>
+            <Text style={{fontSize: 15, fontFamily: 'TenorSans-Regular'}}>
+              {selectedFilter}
+            </Text>
+            <Entypo name="cross" size={20} style={{marginLeft: 10}} />
+          </View>
+        </TouchableOpacity>
+      )}
       <ScrollView contentContainerStyle={{paddingBottom: 250}}>
         <FlatList
           key={isGrid ? 'grid' : 'list'}
-          data={repeatedProducts}
+          data={filteredProducts}
           keyExtractor={item => item.id}
           renderItem={isGrid ? renderGridItem : renderListItem}
           numColumns={isGrid ? 2 : 1}

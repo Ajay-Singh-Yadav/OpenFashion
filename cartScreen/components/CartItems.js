@@ -12,11 +12,13 @@ import {useDispatch, useSelector} from 'react-redux';
 import {increaseQuantity, decreaseQuantity} from '../../store/slice/cartSlice';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import {useNavigation} from '@react-navigation/native';
 
 const CartItems = () => {
   const cartItems = useSelector(state => state.cart.items);
   const dispatch = useDispatch();
   console.log(cartItems);
+  const navigation = useNavigation();
 
   const totalPrice = cartItems.reduce(
     (sum, item) => sum + item.price * item.quantity,
@@ -138,39 +140,41 @@ const CartItems = () => {
             }}
           />
 
-          <View
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              marginRight: 20,
-              marginTop: 15,
-            }}>
-            <Image
-              source={require('../../assests/images/cartscreen/delivery.png')}
-              style={{width: 28, height: 35}}
-            />
-            <Text
+          <TouchableOpacity onPress={() => navigation.navigate('Delivery')}>
+            <View
               style={{
-                fontSize: 18,
-                marginLeft: 20,
-                fontFamily: 'TenorSans-Regular',
-                opacity: 0.7,
-                marginRight: 30,
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                marginRight: 20,
+                marginTop: 15,
               }}>
-              Delivery
-            </Text>
-            <Text
-              style={{
-                fontSize: 18,
-                marginLeft: 20,
-                fontFamily: 'TenorSans-Regular',
-                opacity: 0.3,
-                marginLeft: 90,
-              }}>
-              Free
-            </Text>
-          </View>
+              <Image
+                source={require('../../assests/images/cartscreen/delivery.png')}
+                style={{width: 28, height: 35}}
+              />
+              <Text
+                style={{
+                  fontSize: 18,
+                  marginLeft: 20,
+                  fontFamily: 'TenorSans-Regular',
+                  opacity: 0.7,
+                  marginRight: 30,
+                }}>
+                Delivery
+              </Text>
+              <Text
+                style={{
+                  fontSize: 18,
+                  marginLeft: 20,
+                  fontFamily: 'TenorSans-Regular',
+                  opacity: 0.3,
+                  marginLeft: 90,
+                }}>
+                Free
+              </Text>
+            </View>
+          </TouchableOpacity>
           <View
             style={{
               marginTop: 15,
