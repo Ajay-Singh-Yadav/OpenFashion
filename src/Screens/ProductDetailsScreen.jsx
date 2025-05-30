@@ -24,10 +24,17 @@ const ProductDetailsScreen = () => {
 
   const dispatch = useDispatch();
 
-  const handleAddToCart = product => {
-    dispatch(addToCart(product));
-  };
+  const handleAddToCart = () => {
+    const cartItem = {
+      id: product.id,
+      name: product.name,
+      brand: product.brand,
+      price: product.price,
+      image: product.image, // must be a string URL
+    };
 
+    dispatch(addToCart(cartItem));
+  };
   return (
     <SafeAreaView style={{flex: 1}}>
       <TopBarComp />
@@ -35,7 +42,7 @@ const ProductDetailsScreen = () => {
         <ProductDetails product={product} />
         <ProductDetailsContent />
       </ScrollView>
-      <TouchableOpacity onPress={() => handleAddToCart(product)}>
+      <TouchableOpacity onPress={handleAddToCart}>
         <View
           style={{
             width: '100%',

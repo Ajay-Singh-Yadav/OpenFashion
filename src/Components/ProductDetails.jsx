@@ -7,7 +7,6 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-
 import {useDispatch} from 'react-redux';
 import {addToCart} from '../redux/Slice/CartItemsSlice';
 

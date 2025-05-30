@@ -10,145 +10,155 @@ import {
 } from 'react-native';
 
 import CircleButton from './CircleButton';
-
-import {useSelector} from 'react-redux';
+import {
+  increaseQuantity,
+  decreaseQuantity,
+} from '../redux/Slice/CartItemsSlice';
+import {useDispatch, useSelector} from 'react-redux';
 
 const CartItems = () => {
-  const [quantity, setQuantity] = useState(1);
-
   const cartItems = useSelector(state => state.cart.items);
+  const dispatch = useDispatch();
+
+  const renderItem = ({item}) => (
+    <View style={styles.cartItemContainer}>
+      <Image
+        source={item.image}
+        style={{height: 210, width: 165, borderRadius: 10}}
+      />
+      <View style={styles.cartItemDetails}>
+        <Text style={{marginBottom: 5, fontSize: 18}}>{item.brand}</Text>
+        <Text style={{marginBottom: 30}}>{item.name}</Text>
+
+        <View style={styles.circleButtonContainer}>
+          <CircleButton
+            type="minus"
+            onPress={() => dispatch(decreaseQuantity(item))}
+          />
+          <Text style={styles.quantity}>{item.quantity}</Text>
+          <CircleButton
+            type="plus"
+            onPress={() => dispatch(increaseQuantity(item))}
+          />
+        </View>
+
+        <Text style={{color: 'red'}}>{item.price}</Text>
+      </View>
+    </View>
+  );
+
   return (
     <View style={{alignItems: 'center'}}>
       <Text style={styles.titleText}>CHECKOUT</Text>
       <Image
         source={require('../assets/images/designNewArrival.png')}
-        style={{width: 150, height: 15, marginBottom: 30}}
+        style={{width: 150, height: 15, marginBottom: 10}}
       />
 
       <View style={styles.scrollContainer}>
-        <ScrollView>
-          {cartItems.length === 0 ? (
-            <Text style={styles.emptyText}>Your cart is empty</Text>
-          ) : (
-            cartItems.map((item, index) => (
-              <View style={styles.cartItemContainer}>
-                <Image
-                  source={item.image}
-                  style={{height: 210, width: 165, borderRadius: 10}}
-                />
-                <View style={styles.cartItemDetails}>
-                  <Text style={{marginBottom: 5, fontSize: 18}}>
-                    {item.brand}
-                  </Text>
-                  <Text style={{marginBottom: 30}}>{item.name}</Text>
-                  <View style={styles.circleButtonContainer}>
-                    <CircleButton
-                      type="minus"
-                      onPress={() => setQuantity(q => Math.max(1, q - 1))}
-                    />
-                    <Text style={styles.quantity}>{quantity}</Text>
-                    <CircleButton
-                      type="plus"
-                      onPress={() => setQuantity(q => q + 1)}
-                    />
-                  </View>
-                  <Text style={{color: 'red'}}>{item.price}</Text>
-                </View>
-              </View>
-            ))
-          )}
+        {cartItems.length === 0 ? (
+          <Text style={styles.emptyText}>Your cart is empty</Text>
+        ) : (
+          <View>
+            <FlatList
+              data={cartItems}
+              keyExtractor={item => item.id.toString()}
+              renderItem={renderItem}
+            />
+          </View>
+        )}
 
-          <View
-            style={{
-              marginTop: 15,
-              borderWidth: 0.6,
-              width: 500,
-              borderColor: '#BABABA',
-            }}
+        <View
+          style={{
+            marginTop: 3,
+            borderWidth: 0.6,
+            width: 500,
+            borderColor: '#BABABA',
+          }}
+        />
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            marginHorizontal: 30,
+            marginTop: 10,
+          }}>
+          <Image
+            source={require('../assets/images/Voucher.png')}
+            style={{width: 34, height: 33}}
           />
+          <Text
+            style={{
+              fontSize: 18,
+              fontFamily: 'TenorSans-Regular',
+              opacity: 0.7,
+            }}>
+            Add promo code
+          </Text>
+        </View>
+
+        <View
+          style={{
+            marginTop: 15,
+            borderWidth: 0.6,
+            width: 500,
+            borderColor: '#BABABA',
+          }}
+        />
+
+        <TouchableOpacity>
           <View
             style={{
               flexDirection: 'row',
               alignItems: 'center',
-              justifyContent: 'space-between',
               marginHorizontal: 30,
-              marginTop: 10,
+              marginTop: 15,
             }}>
             <Image
-              source={require('../assets/images/Voucher.png')}
-              style={{width: 34, height: 33}}
+              source={require('../assets/images/delivery.png')}
+              style={{width: 28, height: 35}}
             />
             <Text
               style={{
                 fontSize: 18,
                 fontFamily: 'TenorSans-Regular',
                 opacity: 0.7,
+                marginLeft: 20,
+                marginRight: 150,
               }}>
-              Add promo code
+              Delivery
+            </Text>
+            <Text
+              style={{
+                fontSize: 18,
+                marginLeft: 20,
+                fontFamily: 'TenorSans-Regular',
+                opacity: 0.3,
+                marginLeft: 90,
+              }}>
+              Free
             </Text>
           </View>
-
-          <View
-            style={{
-              marginTop: 15,
-              borderWidth: 0.6,
-              width: 500,
-              borderColor: '#BABABA',
-            }}
-          />
-
-          <TouchableOpacity>
-            <View
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                marginHorizontal: 30,
-                marginTop: 15,
-              }}>
-              <Image
-                source={require('../assets/images/delivery.png')}
-                style={{width: 28, height: 35}}
-              />
-              <Text
-                style={{
-                  fontSize: 18,
-                  fontFamily: 'TenorSans-Regular',
-                  opacity: 0.7,
-                  marginLeft: 20,
-                  marginRight: 150,
-                }}>
-                Delivery
-              </Text>
-              <Text
-                style={{
-                  fontSize: 18,
-                  marginLeft: 20,
-                  fontFamily: 'TenorSans-Regular',
-                  opacity: 0.3,
-                  marginLeft: 90,
-                }}>
-                Free
-              </Text>
-            </View>
-          </TouchableOpacity>
-          <View
-            style={{
-              marginTop: 15,
-              borderWidth: 0.6,
-              width: 500,
-              borderColor: '#BABABA',
-            }}
-          />
-        </ScrollView>
+        </TouchableOpacity>
+        <View
+          style={{
+            marginTop: 15,
+            borderWidth: 0.6,
+            width: 500,
+            borderColor: '#BABABA',
+          }}
+        />
       </View>
 
-      <View style={{width: '100%', marginTop: 200}}>
+      <View style={{width: '100%', marginTop: 220}}>
         <View
           style={{
             padding: 15,
             flexDirection: 'row',
             alignItems: 'center',
             justifyContent: 'space-between',
+            marginHorizontal: 10,
           }}>
           <Text
             style={{
@@ -206,7 +216,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   scrollContainer: {
-    height: 500,
+    height: 600,
     width: '100%',
     paddingHorizontal: 16,
   },
@@ -262,6 +272,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     width: '100%',
+    marginBottom: 15,
   },
   cartItemDetails: {
     marginLeft: 20,
