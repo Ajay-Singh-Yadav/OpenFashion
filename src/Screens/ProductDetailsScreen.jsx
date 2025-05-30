@@ -14,11 +14,19 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import ProductDetailsContent from '../Components/ProductDetailsContent';
 import {useNavigation} from '@react-navigation/native';
 import {useRoute} from '@react-navigation/native';
+import {useDispatch} from 'react-redux';
+import {addToCart} from '../redux/Slice/CartItemsSlice';
 
 const ProductDetailsScreen = () => {
   const navigation = useNavigation();
   const route = useRoute();
   const {product} = route.params;
+
+  const dispatch = useDispatch();
+
+  const handleAddToCart = product => {
+    dispatch(addToCart(product));
+  };
 
   return (
     <SafeAreaView style={{flex: 1}}>
@@ -27,7 +35,7 @@ const ProductDetailsScreen = () => {
         <ProductDetails product={product} />
         <ProductDetailsContent />
       </ScrollView>
-      <TouchableOpacity onPress={() => navigation.navigate('CartScreen')}>
+      <TouchableOpacity onPress={() => handleAddToCart(product)}>
         <View
           style={{
             width: '100%',

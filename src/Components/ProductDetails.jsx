@@ -7,8 +7,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import AntDesign from 'react-native-vector-icons/AntDesign';
+
 import {useDispatch} from 'react-redux';
 import {addToCart} from '../redux/Slice/CartItemsSlice';
 

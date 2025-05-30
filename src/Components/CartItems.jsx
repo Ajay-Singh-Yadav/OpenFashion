@@ -8,12 +8,15 @@ import {
   ScrollView,
   TouchableOpacity,
 } from 'react-native';
-import AntDesign from 'react-native-vector-icons/AntDesign';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+
 import CircleButton from './CircleButton';
+
+import {useSelector} from 'react-redux';
 
 const CartItems = () => {
   const [quantity, setQuantity] = useState(1);
+
+  const cartItems = useSelector(state => state.cart.items);
   return (
     <View style={{alignItems: 'center'}}>
       <Text style={styles.titleText}>CHECKOUT</Text>
@@ -24,32 +27,36 @@ const CartItems = () => {
 
       <View style={styles.scrollContainer}>
         <ScrollView>
-          <View style={styles.cartItemContainer}>
-            <Image
-              source={require('../assets/images/Frame2.png')}
-              style={{height: 210, width: 165, borderRadius: 10}}
-            />
-            <View style={styles.cartItemDetails}>
-              <Text style={{marginBottom: 5, fontSize: 18}}>
-                Ajay Singh Yadav
-              </Text>
-              <Text style={{marginBottom: 30}}>
-                Ajay Singh Yadav Ajay Singh Yadav
-              </Text>
-              <View style={styles.circleButtonContainer}>
-                <CircleButton
-                  type="minus"
-                  onPress={() => setQuantity(q => Math.max(1, q - 1))}
+          {cartItems.length === 0 ? (
+            <Text style={styles.emptyText}>Your cart is empty</Text>
+          ) : (
+            cartItems.map((item, index) => (
+              <View style={styles.cartItemContainer}>
+                <Image
+                  source={item.image}
+                  style={{height: 210, width: 165, borderRadius: 10}}
                 />
-                <Text style={styles.quantity}>{quantity}</Text>
-                <CircleButton
-                  type="plus"
-                  onPress={() => setQuantity(q => q + 1)}
-                />
+                <View style={styles.cartItemDetails}>
+                  <Text style={{marginBottom: 5, fontSize: 18}}>
+                    {item.brand}
+                  </Text>
+                  <Text style={{marginBottom: 30}}>{item.name}</Text>
+                  <View style={styles.circleButtonContainer}>
+                    <CircleButton
+                      type="minus"
+                      onPress={() => setQuantity(q => Math.max(1, q - 1))}
+                    />
+                    <Text style={styles.quantity}>{quantity}</Text>
+                    <CircleButton
+                      type="plus"
+                      onPress={() => setQuantity(q => q + 1)}
+                    />
+                  </View>
+                  <Text style={{color: 'red'}}>{item.price}</Text>
+                </View>
               </View>
-              <Text style={{color: 'red'}}>$ 120</Text>
-            </View>
-          </View>
+            ))
+          )}
 
           <View
             style={{

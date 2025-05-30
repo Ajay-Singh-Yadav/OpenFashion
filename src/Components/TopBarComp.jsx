@@ -1,7 +1,9 @@
+import {useNavigation} from '@react-navigation/native';
 import React from 'react';
-import {Image, StyleSheet, View} from 'react-native';
+import {Image, StyleSheet, TouchableOpacity, View} from 'react-native';
 
 const TopBarComp = () => {
+  const navigation = useNavigation();
   return (
     <View style={[styles.row, {margin: 20}]}>
       <Image
@@ -19,10 +21,12 @@ const TopBarComp = () => {
           source={require('../assets/images/Search.png')}
           style={{height: 30, width: 30}}
         />
-        <Image
-          source={require('../assets/images/bag.png')}
-          style={{height: 30, width: 30, marginLeft: 10}}
-        />
+        <TouchableOpacity onPress={() => navigation.navigate('CartScreen')}>
+          <Image
+            source={require('../assets/images/bag.png')}
+            style={{height: 30, width: 30, marginLeft: 10}}
+          />
+        </TouchableOpacity>
       </View>
     </View>
   );
