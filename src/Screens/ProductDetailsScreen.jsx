@@ -13,14 +13,18 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import ProductDetailsContent from '../Components/ProductDetailsContent';
 import {useNavigation} from '@react-navigation/native';
+import {useRoute} from '@react-navigation/native';
 
 const ProductDetailsScreen = () => {
   const navigation = useNavigation();
+  const route = useRoute();
+  const {product} = route.params;
+
   return (
     <SafeAreaView style={{flex: 1}}>
       <TopBarComp />
-      <ScrollView contentContainerStyle={{flex: 1}}>
-        <ProductDetails />
+      <ScrollView contentContainerStyle={{}}>
+        <ProductDetails product={product} />
         <ProductDetailsContent />
       </ScrollView>
       <TouchableOpacity onPress={() => navigation.navigate('CartScreen')}>

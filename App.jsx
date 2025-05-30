@@ -4,7 +4,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 import {NavigationContainer} from '@react-navigation/native';
 
 import {Provider} from 'react-redux';
-import {store} from './store/store';
+import {store} from './src/redux/store';
 
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import ProductDrawer from './exploreScreen/DrawerNav/ProductDrawer';

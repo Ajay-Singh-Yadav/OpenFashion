@@ -26,7 +26,8 @@ export default function ProductListGridScreen() {
 
   //  Grid View
   const renderGridItem = ({item}) => (
-    <TouchableOpacity onPress={() => navigation.navigate('ProductScreen')}>
+    <TouchableOpacity
+      onPress={() => navigation.navigate('ProductScreen', {product: item})}>
       <View style={[styles.gridItem, {width: gridItemWidth}]}>
         <ImageBackground
           source={item.image}
@@ -46,7 +47,8 @@ export default function ProductListGridScreen() {
 
   // List View
   const renderListItem = ({item}) => (
-    <TouchableOpacity>
+    <TouchableOpacity
+      onPress={() => navigation.navigate('ProductScreen', {product: item})}>
       <View style={styles.listItem}>
         <Image source={item.image} style={styles.listImage} />
         <View style={styles.listInfo}>

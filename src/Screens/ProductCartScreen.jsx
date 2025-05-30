@@ -1,11 +1,15 @@
 import {StyleSheet, Text, View} from 'react-native';
 import React from 'react';
+import TopBarComp from '../Components/TopBarComp';
+import {SafeAreaView} from 'react-native-safe-area-context';
+import CartItems from '../Components/CartItems';
 
 const ProductCartScreen = () => {
   return (
-    <View>
-      <Text>ProductCartScreen</Text>
-    </View>
+    <SafeAreaView>
+      <TopBarComp />
+      <CartItems />
+    </SafeAreaView>
   );
 };
 
