@@ -10,6 +10,8 @@ import HomeScreen from './src/Screens/HomeScreen';
 import ProductListGridScreen from './src/Screens/ProductListGridScreen';
 import ProductDetailsScreen from './src/Screens/ProductDetailsScreen';
 import ProductCartScreen from './src/Screens/ProductCartScreen';
+import LogInScreen from './src/Screens/LogInSignup/LogInScreen';
+import SignUpScreen from './src/Screens/LogInSignup/SignUpScreen';
 
 const Stack = createStackNavigator();
 
@@ -19,6 +21,8 @@ const App = () => {
       <NavigationContainer>
         <Stack.Navigator screenOptions={{headerShown: false}}>
           <Stack.Screen name="Splash" component={SplashScreen} />
+          <Stack.Screen name="SignUp" component={SignUpScreen} />
+          <Stack.Screen name="Login" component={LogInScreen} />
           <Stack.Screen name="Home" component={HomeScreen} />
           <Stack.Screen name="ListGrid" component={ProductListGridScreen} />
           <Stack.Screen name="ProductScreen" component={ProductDetailsScreen} />

@@ -143,5 +143,5 @@ export const products = [
     rating: 4.8,
     sizes: ['S', 'M', 'L'],
   },
-  // Add more...
+
 ];

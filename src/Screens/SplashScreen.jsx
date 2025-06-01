@@ -5,7 +5,6 @@ import {
   StatusBar,
   StyleSheet,
   Text,
-  TouchableOpacity,
   View,
 } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
@@ -13,7 +12,7 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 const SplashScreen = ({navigation}) => {
   useEffect(() => {
     const timer = setTimeout(() => {
-      navigation.replace('Home');
+      navigation.replace('SignUp');
     }, 2000);
     return () => clearTimeout(timer);
   }, []);
