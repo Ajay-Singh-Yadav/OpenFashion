@@ -3,7 +3,15 @@ import React from 'react';
 
 import Entypo from 'react-native-vector-icons/Entypo';
 
-const InputComp = ({icon, placeholder}) => {
+const InputComp = ({
+  icon,
+  placeholder,
+  value,
+  onChangeText,
+  onBlur,
+  secureTextEntry,
+  keyboardType,
+}) => {
   return (
     <View style={[styles.inputTextWrapper, {}]}>
       <View style={styles.inputTextContainer}>
@@ -12,6 +20,11 @@ const InputComp = ({icon, placeholder}) => {
           placeholder={placeholder}
           placeholderTextColor="#C8C8C8"
           style={styles.inputText}
+          value={value}
+          onChangeText={onChangeText}
+          onBlur={onBlur}
+          secureTextEntry={secureTextEntry}
+          keyboardType={keyboardType}
         />
       </View>
     </View>
@@ -22,7 +35,7 @@ export default InputComp;
 
 const styles = StyleSheet.create({
   inputTextWrapper: {
-    height: 120,
+    height: 70,
     width: 430,
   },
   inputTextContainer: {

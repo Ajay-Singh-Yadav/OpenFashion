@@ -2,10 +2,10 @@ import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React from 'react';
 import Entypo from 'react-native-vector-icons/Entypo';
 
-const ButtonComp = ({title}) => {
+const ButtonComp = ({title, onPress}) => {
   return (
     <View style={styles.container}>
-      <TouchableOpacity style={styles.ButtonContainer}>
+      <TouchableOpacity onPress={onPress} style={styles.ButtonContainer}>
         <Text style={styles.ButtonText}>{title}</Text>
         <Entypo name="login" size={30} color="#fff" />
       </TouchableOpacity>

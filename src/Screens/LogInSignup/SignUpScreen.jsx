@@ -1,4 +1,5 @@
 import {
+  Alert,
   Image,
   StatusBar,
   StyleSheet,
@@ -16,6 +17,22 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import InputComp from '../../Components/LoginSignComp/InputComp';
 import ButtonComp from '../../Components/LoginSignComp/ButtonComp';
 
+const validationSchema = Yup.object().shape({
+  fullName: Yup.string().required('Full Name is required'),
+  email: Yup.string()
+    .matches(/^[a-z0-9]+[0-9]*@gmail\.com$/, 'Invalid email format')
+    .required('Email is required'),
+  password: Yup.string()
+    .matches(
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/,
+      'Password must include upper, lower, number & special char',
+    )
+    .required('Password is required'),
+  confirmPassword: Yup.string()
+    .oneOf([Yup.ref('password'), null], 'Passwords must match')
+    .required('Confirm Password is required'),
+});
+
 const SignUpScreen = () => {
   return (
     <SafeAreaView style={styles.container}>
@@ -31,15 +48,91 @@ const SignUpScreen = () => {
         style={styles.lineImage}
       />
       <Text style={styles.createText}>Create an account</Text>
-      <InputComp icon="user" placeholder="User Name" />
 
-      <InputComp icon="mail" placeholder="Email" />
+      <Formik
+        initialValues={{
+          fullName: '',
+          email: '',
+          password: '',
+          confirmPassword: '',
+        }}
+        validationSchema={validationSchema}
+        onSubmit={(values, {resetForm}) => {
+          Alert.alert(
+            'Form Submitted',
+            `Name: ${values.fullName}\nEmail: ${values.email}`,
+            [{text: 'OK'}],
+          );
+          resetForm();
+        }}>
+        {({
+          handleChange,
+          handleBlur,
+          handleSubmit,
+          values,
+          errors,
+          touched,
+        }) => (
+          <>
+            <View style={styles.inputFormikContainer}>
+              <InputComp
+                icon="user"
+                placeholder="Full Name"
+                value={values.fullName}
+                onChangeText={handleChange('fullName')}
+                onBlur={handleBlur('fullName')}
+              />
+              {touched.fullName && errors.fullName && (
+                <Text style={styles.errorText}>{errors.fullName}</Text>
+              )}
+            </View>
 
-      <InputComp icon="lock" placeholder="Password" />
+            <View style={styles.inputFormikContainer}>
+              <InputComp
+                icon="mail"
+                placeholder="Email"
+                value={values.email}
+                onChangeText={handleChange('email')}
+                onBlur={handleBlur('email')}
+                keyboardType="email-address"
+              />
+              {touched.email && errors.email && (
+                <Text style={styles.errorText}>{errors.email}</Text>
+              )}
+            </View>
 
-      <InputComp icon="mobile" placeholder="Mobile" />
+            <View style={styles.inputFormikContainer}>
+              <InputComp
+                icon="lock"
+                placeholder="Password"
+                value={values.password}
+                onChangeText={handleChange('password')}
+                onBlur={handleBlur('password')}
+                secureTextEntry
+              />
+              {touched.password && errors.password && (
+                <Text style={styles.errorText}>{errors.password}</Text>
+              )}
+            </View>
 
-      <ButtonComp title={'SinUp'} />
+            <View style={styles.inputFormikContainer}>
+              <InputComp
+                icon="lock"
+                placeholder="Confirm Password"
+                value={values.confirmPassword}
+                onChangeText={handleChange('confirmPassword')}
+                onBlur={handleBlur('confirmPassword')}
+                secureTextEntry
+              />
+              {touched.confirmPassword && errors.confirmPassword && (
+                <Text style={styles.errorText}>{errors.confirmPassword}</Text>
+              )}
+            </View>
+
+            <ButtonComp title="Sign Up" onPress={handleSubmit} />
+          </>
+        )}
+      </Formik>
 
       <TouchableOpacity
         style={{
@@ -110,5 +203,15 @@ const styles = StyleSheet.create({
     fontFamily: 'TenorSans-Regular',
     fontSize: 18,
     marginBottom: 20,
+  },
+  errorText: {
+    color: 'red',
+    fontSize: 12,
+    alignSelf: 'flex-start',
+    marginLeft: 30,
+    marginBottom: 5,
+  },
+  inputFormikContainer: {
+    marginBottom: 30,
   },
 });
