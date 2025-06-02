@@ -1,4 +1,4 @@
-import {StyleSheet, TextInput, View} from 'react-native';
+import {StyleSheet, TextInput, TouchableOpacity, View} from 'react-native';
 import React from 'react';
 
 import Entypo from 'react-native-vector-icons/Entypo';
@@ -11,6 +11,8 @@ const InputComp = ({
   onBlur,
   secureTextEntry,
   keyboardType,
+  onEyePress,
+  showPassword,
 }) => {
   return (
     <View style={[styles.inputTextWrapper, {}]}>
@@ -26,6 +28,16 @@ const InputComp = ({
           secureTextEntry={secureTextEntry}
           keyboardType={keyboardType}
         />
+
+        {icon === 'lock' && (
+          <TouchableOpacity onPress={onEyePress}>
+            <Entypo
+              name={showPassword ? 'eye' : 'eye-with-line'}
+              size={22}
+              color="#C8C8C8"
+            />
+          </TouchableOpacity>
+        )}
       </View>
     </View>
   );

@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
 
 import {Formik} from 'formik';
 import * as Yup from 'yup';
@@ -36,6 +36,10 @@ const validationSchema = Yup.object().shape({
 
 const SignUpScreen = () => {
   const navigation = useNavigation();
+
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar
@@ -61,7 +65,7 @@ const SignUpScreen = () => {
         validationSchema={validationSchema}
         onSubmit={(values, {resetForm}) => {
           Alert.alert(
-            'Form Submitted',
+            'Successfully Registered',
             `Name: ${values.fullName}\nEmail: ${values.email}`,
             [{text: 'OK'}],
           );
@@ -114,7 +118,9 @@ const SignUpScreen = () => {
                 value={values.password}
                 onChangeText={handleChange('password')}
                 onBlur={handleBlur('password')}
-                secureTextEntry
+                secureTextEntry={!showPassword}
+                onEyePress={() => setShowPassword(!showPassword)}
+                showPassword={showPassword}
               />
               {touched.password && errors.password && (
                 <Text style={styles.errorText}>{errors.password}</Text>
@@ -128,7 +134,9 @@ const SignUpScreen = () => {
                 value={values.confirmPassword}
                 onChangeText={handleChange('confirmPassword')}
                 onBlur={handleBlur('confirmPassword')}
-                secureTextEntry
+                secureTextEntry={!showConfirmPassword}
+                onEyePress={() => setShowConfirmPassword(!showConfirmPassword)}
+                showPassword={showConfirmPassword}
               />
               {touched.confirmPassword && errors.confirmPassword && (
                 <Text style={styles.errorText}>{errors.confirmPassword}</Text>
