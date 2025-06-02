@@ -40,6 +40,7 @@ const styles = StyleSheet.create({
   },
   inputTextContainer: {
     flexDirection: 'row',
+
     alignItems: 'center',
     borderWidth: 1,
     borderColor: '#ccc',

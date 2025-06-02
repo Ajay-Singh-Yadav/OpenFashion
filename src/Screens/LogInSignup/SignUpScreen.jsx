@@ -16,6 +16,7 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 
 import InputComp from '../../Components/LoginSignComp/InputComp';
 import ButtonComp from '../../Components/LoginSignComp/ButtonComp';
+import {useNavigation} from '@react-navigation/native';
 
 const validationSchema = Yup.object().shape({
   fullName: Yup.string().required('Full Name is required'),
@@ -34,6 +35,7 @@ const validationSchema = Yup.object().shape({
 });
 
 const SignUpScreen = () => {
+  const navigation = useNavigation();
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar
@@ -64,6 +66,10 @@ const SignUpScreen = () => {
             [{text: 'OK'}],
           );
           resetForm();
+
+          setTimeout(() => {
+            navigation.navigate('Home');
+          }, 3000);
         }}>
         {({
           handleChange,
@@ -212,6 +218,7 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
   inputFormikContainer: {
-    marginBottom: 30,
+    height: 90,
+    marginBottom: 20,
   },
 });
