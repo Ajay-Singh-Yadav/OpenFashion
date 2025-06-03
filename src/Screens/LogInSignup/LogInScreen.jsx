@@ -6,14 +6,16 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
+
+import {useNavigation} from '@react-navigation/native';
 import InputComp from '../../Components/LoginSignComp/InputComp';
 import ButtonComp from '../../Components/LoginSignComp/ButtonComp';
-import {useNavigation} from '@react-navigation/native';
 
 const LogInScreen = () => {
   const navigation = useNavigation();
+
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar
@@ -22,11 +24,8 @@ const LogInScreen = () => {
         translucent
       />
       <Text style={styles.LoginText}>LogIn</Text>
-      <Image
-        source={require('../../assets/images/designNewArrival.png')}
-        style={styles.lineImage}
-      />
-      <InputComp icon="user" placeholder="User Name" />
+
+      <InputComp icon="user" placeholder="Email" />
 
       <InputComp icon="lock" placeholder="Password" />
 
@@ -44,7 +43,7 @@ const LogInScreen = () => {
         </Text>
       </TouchableOpacity>
 
-      <ButtonComp title={'LogIn'} />
+      <ButtonComp title="Log In" onPress={() => navigation.navigate('Home')} />
 
       <TouchableOpacity
         // onPress={() => navigation.navigate('SignUp')}
@@ -59,27 +58,6 @@ const LogInScreen = () => {
           Don't have an account?
         </Text>
       </TouchableOpacity>
-
-      <View style={styles.IconsLoginContainer}>
-        <TouchableOpacity>
-          <Image
-            source={require('../../assets/images/facebook.png')}
-            style={styles.LoginIcons}
-          />
-        </TouchableOpacity>
-        <TouchableOpacity>
-          <Image
-            source={require('../../assets/images/Google.png')}
-            style={styles.LoginIcons}
-          />
-        </TouchableOpacity>
-        <TouchableOpacity>
-          <Image
-            source={require('../../assets/images/Twitter.png')}
-            style={styles.LoginIcons}
-          />
-        </TouchableOpacity>
-      </View>
     </SafeAreaView>
   );
 };
