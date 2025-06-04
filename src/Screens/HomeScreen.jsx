@@ -20,8 +20,16 @@ import ProductSlider from '../Components/ProductSlider';
 import FashionPage from '../Components/FashionPage';
 import FooterComponent from '../Components/footer';
 import TopBarComp from '../Components/TopBarComp';
-
+import auth from '@react-native-firebase/auth';
+import {useNavigation} from '@react-navigation/native';
 const HomeScreen = () => {
+  const navigation = useNavigation();
+
+  const handleLogOut = async () => {
+    await auth().signOut();
+    navigation.replace('Login');
+  };
+
   return (
     <View style={styles.Maincontainer}>
       <StatusBar
@@ -31,7 +39,7 @@ const HomeScreen = () => {
       />
       <SafeAreaView style={{flex: 1}}>
         {/* Header */}
-        <TopBarComp />
+        <TopBarComp onPress={handleLogOut} />
         {/* <Header /> */}
 
         <ScrollView style={{flex: 1}}>

@@ -57,11 +57,11 @@ const LogInScreen = () => {
         validationSchema={validationSchema}
         onSubmit={async (values, {resetForm}) => {
           try {
-            await auth().createUserWithEmailAndPassword(
+            await auth().signInWithEmailAndPassword(
               values.email,
               values.password,
             );
-            Alert.alert('Success', 'User registered successfully!');
+            Alert.alert('Success', 'User logged in successfully!');
             resetForm();
             navigation.navigate('Home');
           } catch (error) {
