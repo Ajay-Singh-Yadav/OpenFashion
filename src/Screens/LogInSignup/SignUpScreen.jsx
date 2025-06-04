@@ -18,6 +18,7 @@ import InputComp from '../../Components/LoginSignComp/InputComp';
 import ButtonComp from '../../Components/LoginSignComp/ButtonComp';
 import {useNavigation} from '@react-navigation/native';
 import auth from '@react-native-firebase/auth';
+import {SignUp} from '../../services/auth';
 
 const validationSchema = Yup.object().shape({
   fullName: Yup.string().required('Full Name is required'),
@@ -40,6 +41,16 @@ const SignUpScreen = () => {
 
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+  const handleSignUp = async (email, password, resetForm, navigation) => {
+    try {
+      const userCredential = await SignUp(email, password);
+      resetForm();
+      navigation.navigate('Home');
+    } catch (error) {
+      Alert.alert('Registration Error', error.message);
+    }
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -65,17 +76,7 @@ const SignUpScreen = () => {
         }}
         validationSchema={validationSchema}
         onSubmit={async (values, {resetForm}) => {
-          try {
-            await auth().createUserWithEmailAndPassword(
-              values.email,
-              values.password,
-            );
-            Alert.alert('Success', 'User registered successfully!');
-            resetForm();
-            navigation.navigate('Home');
-          } catch (error) {
-            Alert.alert('Registration Error', error.message);
-          }
+          handleSignUp(values.email, values.password, resetForm, navigation);
         }}>
         {({
           handleChange,
