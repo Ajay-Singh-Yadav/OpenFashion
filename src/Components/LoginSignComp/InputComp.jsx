@@ -9,11 +9,13 @@ const InputComp = ({
   value,
   onChangeText,
   onBlur,
-  secureTextEntry,
-  keyboardType,
+  secureTextEntry = false,
+  keyboardType = 'default',
   onEyePress,
   showPassword,
 }) => {
+  const isPasswordField = icon === 'lock';
+
   return (
     <View style={[styles.inputTextWrapper, {}]}>
       <View style={styles.inputTextContainer}>
@@ -29,7 +31,7 @@ const InputComp = ({
           keyboardType={keyboardType}
         />
 
-        {icon === 'lock' && (
+        {isPasswordField && (
           <TouchableOpacity onPress={onEyePress}>
             <Entypo
               name={showPassword ? 'eye' : 'eye-with-line'}

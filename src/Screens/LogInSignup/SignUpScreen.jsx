@@ -17,6 +17,7 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import InputComp from '../../Components/LoginSignComp/InputComp';
 import ButtonComp from '../../Components/LoginSignComp/ButtonComp';
 import {useNavigation} from '@react-navigation/native';
+import auth from '@react-native-firebase/auth';
 
 const validationSchema = Yup.object().shape({
   fullName: Yup.string().required('Full Name is required'),
@@ -63,17 +64,18 @@ const SignUpScreen = () => {
           confirmPassword: '',
         }}
         validationSchema={validationSchema}
-        onSubmit={(values, {resetForm}) => {
-          Alert.alert(
-            'Successfully Registered',
-            `Name: ${values.fullName}\nEmail: ${values.email}`,
-            [{text: 'OK'}],
-          );
-          resetForm();
-
-          setTimeout(() => {
+        onSubmit={async (values, {resetForm}) => {
+          try {
+            await auth().createUserWithEmailAndPassword(
+              values.email,
+              values.password,
+            );
+            Alert.alert('Success', 'User registered successfully!');
+            resetForm();
             navigation.navigate('Home');
-          }, 3000);
+          } catch (error) {
+            Alert.alert('Registration Error', error.message);
+          }
         }}>
         {({
           handleChange,
@@ -149,6 +151,7 @@ const SignUpScreen = () => {
       </Formik>
 
       <TouchableOpacity
+        onPress={() => navigation.navigate('Login')}
         style={{
           marginTop: 70,
         }}>
@@ -205,7 +208,7 @@ const styles = StyleSheet.create({
   },
   IconsLoginContainer: {
     flexDirection: 'row',
-    marginTop: 30,
+    marginTop: 50,
     width: 300,
     justifyContent: 'space-around',
   },

@@ -1,4 +1,5 @@
 import {
+  Alert,
   Image,
   StatusBar,
   StyleSheet,
@@ -12,9 +13,27 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import {useNavigation} from '@react-navigation/native';
 import InputComp from '../../Components/LoginSignComp/InputComp';
 import ButtonComp from '../../Components/LoginSignComp/ButtonComp';
+import {Formik} from 'formik';
+import * as Yup from 'yup';
+import auth from '@react-native-firebase/auth';
+
+const validationSchema = Yup.object().shape({
+  email: Yup.string()
+    .matches(/^[a-z0-9]+[0-9]*@gmail\.com$/, 'Invalid email format')
+    .required('Email is required'),
+  password: Yup.string()
+    .matches(
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/,
+      'Password must include upper, lower, number & special char',
+    )
+    .required('Password is required'),
+});
 
 const LogInScreen = () => {
   const navigation = useNavigation();
+
+  const [showPassword, setShowPassword] = useState(false);
+  const [message, setMessage] = useState('');
 
   return (
     <SafeAreaView style={styles.container}>
@@ -25,28 +44,91 @@ const LogInScreen = () => {
       />
       <Text style={styles.LoginText}>LogIn</Text>
 
-      <InputComp icon="user" placeholder="Email" />
+      <Image
+        source={require('../../assets/images/designNewArrival.png')}
+        style={styles.lineImage}
+      />
 
-      <InputComp icon="lock" placeholder="Password" />
-
-      <TouchableOpacity
-        style={{
-          marginLeft: 280,
-          marginBottom: 50,
+      <Formik
+        initialValues={{
+          email: '',
+          password: '',
+        }}
+        validationSchema={validationSchema}
+        onSubmit={async (values, {resetForm}) => {
+          try {
+            await auth().createUserWithEmailAndPassword(
+              values.email,
+              values.password,
+            );
+            Alert.alert('Success', 'User registered successfully!');
+            resetForm();
+            navigation.navigate('Home');
+          } catch (error) {
+            Alert.alert('Registration Error', error.message);
+          }
         }}>
-        <Text
-          style={{
-            fontSize: 16,
-            fontFamily: 'TenorSans-Regular',
-          }}>
-          Forgot Password?
-        </Text>
-      </TouchableOpacity>
+        {({
+          handleChange,
+          handleBlur,
+          handleSubmit,
+          values,
+          errors,
+          touched,
+        }) => (
+          <>
+            <View style={styles.inputFormikContainer}>
+              <InputComp
+                placeholder="Email"
+                value={values.email}
+                onChangeText={handleChange('email')}
+                onBlur={handleBlur('email')}
+                secureTextEntry={false}
+                keyboardType="email-address"
+              />
 
-      <ButtonComp title="Log In" onPress={() => navigation.navigate('Home')} />
+              {touched.email && errors.email && (
+                <Text style={styles.errorText}>{errors.email}</Text>
+              )}
+            </View>
+
+            <View style={styles.inputFormikContainer}>
+              <InputComp
+                icon="lock"
+                placeholder="Password"
+                value={values.password}
+                onChangeText={handleChange('password')}
+                onBlur={handleBlur('password')}
+                secureTextEntry={!showPassword}
+                onEyePress={() => setShowPassword(!showPassword)}
+                showPassword={showPassword}
+              />
+              {touched.password && errors.password && (
+                <Text style={styles.errorText}>{errors.password}</Text>
+              )}
+            </View>
+
+            <TouchableOpacity
+              style={{
+                marginLeft: 280,
+                marginBottom: 50,
+              }}>
+              <Text
+                style={{
+                  fontSize: 16,
+                  fontFamily: 'TenorSans-Regular',
+                }}>
+                Forgot Password?
+              </Text>
+            </TouchableOpacity>
+
+            <ButtonComp title="Log In" icon="login" onPress={handleSubmit} />
+          </>
+        )}
+      </Formik>
 
       <TouchableOpacity
-        // onPress={() => navigation.navigate('SignUp')}
+        onPress={() => navigation.navigate('SignUp')}
         style={{
           marginTop: 70,
         }}>
@@ -58,6 +140,27 @@ const LogInScreen = () => {
           Don't have an account?
         </Text>
       </TouchableOpacity>
+
+      <View style={styles.IconsLoginContainer}>
+        <TouchableOpacity>
+          <Image
+            source={require('../../assets/images/facebook.png')}
+            style={styles.LoginIcons}
+          />
+        </TouchableOpacity>
+        <TouchableOpacity>
+          <Image
+            source={require('../../assets/images/Google.png')}
+            style={styles.LoginIcons}
+          />
+        </TouchableOpacity>
+        <TouchableOpacity>
+          <Image
+            source={require('../../assets/images/Twitter.png')}
+            style={styles.LoginIcons}
+          />
+        </TouchableOpacity>
+      </View>
     </SafeAreaView>
   );
 };
@@ -72,22 +175,33 @@ const styles = StyleSheet.create({
   LoginText: {
     fontSize: 40,
     fontFamily: 'TenorSans-Regular',
-    marginTop: 160,
+    marginTop: 100,
   },
   lineImage: {
     marginTop: 10,
     width: 200,
     height: 20,
-    marginBottom: 70,
-  },
-  IconsLoginContainer: {
-    flexDirection: 'row',
-    marginTop: 30,
-    width: 300,
-    justifyContent: 'space-around',
+    marginBottom: 40,
   },
   LoginIcons: {
     width: 50,
     height: 50,
+  },
+  inputFormikContainer: {
+    height: 90,
+    marginBottom: 40,
+  },
+  errorText: {
+    color: 'red',
+    fontSize: 12,
+    alignSelf: 'flex-start',
+    marginLeft: 30,
+    marginBottom: 5,
+  },
+  IconsLoginContainer: {
+    flexDirection: 'row',
+    marginTop: 50,
+    width: 300,
+    justifyContent: 'space-around',
   },
 });
