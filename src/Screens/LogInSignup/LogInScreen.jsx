@@ -16,6 +16,7 @@ import ButtonComp from '../../Components/LoginSignComp/ButtonComp';
 import {Formik} from 'formik';
 import * as Yup from 'yup';
 import auth from '@react-native-firebase/auth';
+import {login} from '../../services/auth';
 
 const validationSchema = Yup.object().shape({
   email: Yup.string()
@@ -34,6 +35,16 @@ const LogInScreen = () => {
 
   const [showPassword, setShowPassword] = useState(false);
   const [message, setMessage] = useState('');
+
+  const handleLogin = async (email, password, navigation, resetForm) => {
+    try {
+      const user = await login(email, password);
+      resetForm();
+      navigation.navigate('Home');
+    } catch (error) {
+      Alert.alert('LogIn  Error', error.message);
+    }
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -55,18 +66,8 @@ const LogInScreen = () => {
           password: '',
         }}
         validationSchema={validationSchema}
-        onSubmit={async (values, {resetForm}) => {
-          try {
-            await auth().signInWithEmailAndPassword(
-              values.email,
-              values.password,
-            );
-            Alert.alert('Success', 'User logged in successfully!');
-            resetForm();
-            navigation.navigate('Home');
-          } catch (error) {
-            Alert.alert('Registration Error', error.message);
-          }
+        onSubmit={(values, {resetForm}) => {
+          handleLogin(values.email, values.password, navigation, resetForm);
         }}>
         {({
           handleChange,
