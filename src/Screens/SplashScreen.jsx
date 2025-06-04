@@ -8,15 +8,20 @@ import {
   View,
 } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
+import auth from '@react-native-firebase/auth';
 
 const SplashScreen = ({navigation}) => {
   useEffect(() => {
-    const timer = setTimeout(() => {
-      navigation.replace('Login');
-    }, 2000);
-    return () => clearTimeout(timer);
-  }, []);
+    const unsubscribe = auth().onAuthStateChanged(user => {
+      if (user) {
+        navigation.replace('Home');
+      } else {
+        navigation.replace('Login');
+      }
+    });
 
+    return unsubscribe;
+  }, []);
   return (
     <View style={styles.ParentContainer}>
       <StatusBar
