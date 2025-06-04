@@ -13,13 +13,21 @@ import ProductCartScreen from './src/Screens/ProductCartScreen';
 import LogInScreen from './src/Screens/LogInSignup/LogInScreen';
 import SignUpScreen from './src/Screens/LogInSignup/SignUpScreen';
 
+import {LogBox} from 'react-native';
+import {AuthGate} from './src/services/AuthGate';
+
 const Stack = createStackNavigator();
 
 const App = () => {
+  LogBox.ignoreLogs([
+    'This method is deprecated', // or the exact warning message
+  ]);
+
   return (
     <Provider store={store}>
       <NavigationContainer>
-        <Stack.Navigator screenOptions={{headerShown: false}}>
+        <AuthGate />
+        {/* <Stack.Navigator screenOptions={{headerShown: false}}>
           <Stack.Screen name="Splash" component={SplashScreen} />
           <Stack.Screen name="SignUp" component={SignUpScreen} />
           <Stack.Screen name="Login" component={LogInScreen} />
@@ -27,7 +35,7 @@ const App = () => {
           <Stack.Screen name="ListGrid" component={ProductListGridScreen} />
           <Stack.Screen name="ProductScreen" component={ProductDetailsScreen} />
           <Stack.Screen name="CartScreen" component={ProductCartScreen} />
-        </Stack.Navigator>
+        </Stack.Navigator> */}
       </NavigationContainer>
     </Provider>
   );

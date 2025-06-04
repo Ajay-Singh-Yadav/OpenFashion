@@ -23,11 +23,3 @@ export const SignUp = async (email, password) => {
     Alert.alert('Registration Error', error.message);
   }
 };
-
-export const logout = async () => {
-  try {
-    await signOut();
-  } catch (error) {
-    throw error;
-  }
-};

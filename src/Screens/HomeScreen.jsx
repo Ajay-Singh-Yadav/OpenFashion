@@ -22,6 +22,10 @@ import FooterComponent from '../Components/footer';
 import TopBarComp from '../Components/TopBarComp';
 import auth from '@react-native-firebase/auth';
 import {useNavigation} from '@react-navigation/native';
+
+import {getApp} from '@react-native-firebase/app';
+import {getAuth, signOut} from '@react-native-firebase/auth';
+
 const HomeScreen = () => {
   const navigation = useNavigation();
 
