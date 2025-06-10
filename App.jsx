@@ -4,14 +4,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 import {NavigationContainer} from '@react-navigation/native';
 import {Provider} from 'react-redux';
 import {store} from './src/redux/store';
-
-import SplashScreen from './src/Screens/SplashScreen';
-import HomeScreen from './src/Screens/HomeScreen';
-import ProductListGridScreen from './src/Screens/ProductListGridScreen';
-import ProductDetailsScreen from './src/Screens/ProductDetailsScreen';
-import ProductCartScreen from './src/Screens/ProductCartScreen';
-import LogInScreen from './src/Screens/LogInSignup/LogInScreen';
-import SignUpScreen from './src/Screens/LogInSignup/SignUpScreen';
+import LottieView from 'lottie-react-native';
 
 import {LogBox} from 'react-native';
 import {AuthGate} from './src/services/AuthGate';
@@ -19,23 +12,12 @@ import {AuthGate} from './src/services/AuthGate';
 const Stack = createStackNavigator();
 
 const App = () => {
-  LogBox.ignoreLogs([
-    'This method is deprecated', // or the exact warning message
-  ]);
+  LogBox.ignoreLogs(['This method is deprecated']);
 
   return (
     <Provider store={store}>
       <NavigationContainer>
         <AuthGate />
-        {/* <Stack.Navigator screenOptions={{headerShown: false}}>
-          <Stack.Screen name="Splash" component={SplashScreen} />
-          <Stack.Screen name="SignUp" component={SignUpScreen} />
-          <Stack.Screen name="Login" component={LogInScreen} />
-          <Stack.Screen name="Home" component={HomeScreen} />
-          <Stack.Screen name="ListGrid" component={ProductListGridScreen} />
-          <Stack.Screen name="ProductScreen" component={ProductDetailsScreen} />
-          <Stack.Screen name="CartScreen" component={ProductCartScreen} />
-        </Stack.Navigator> */}
       </NavigationContainer>
     </Provider>
   );
