@@ -15,8 +15,8 @@ import InputComp from '../../Components/LoginSignComp/InputComp';
 import ButtonComp from '../../Components/LoginSignComp/ButtonComp';
 import {Formik} from 'formik';
 import * as Yup from 'yup';
-import auth from '@react-native-firebase/auth';
 import {login} from '../../services/auth';
+import LottieView from 'lottie-react-native';
 
 const validationSchema = Yup.object().shape({
   email: Yup.string()
@@ -35,14 +35,17 @@ const LogInScreen = () => {
 
   const [showPassword, setShowPassword] = useState(false);
   const [message, setMessage] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const handleLogin = async (email, password, navigation, resetForm) => {
     try {
+      setLoading(true);
       const user = await login(email, password);
       resetForm();
-      navigation.navigate('Home');
     } catch (error) {
       Alert.alert('LogIn  Error', error.message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -106,6 +109,23 @@ const LogInScreen = () => {
               />
               {touched.password && errors.password && (
                 <Text style={styles.errorText}>{errors.password}</Text>
+              )}
+            </View>
+
+            <View
+              style={{
+                alignItems: 'center',
+                justifyContent: 'center',
+                height: 20,
+                width: 100,
+              }}>
+              {loading && (
+                <LottieView
+                  source={require('../../assets/animation/Loader.json')}
+                  autoPlay
+                  loop
+                  style={{width: 100, height: 100}}
+                />
               )}
             </View>
 

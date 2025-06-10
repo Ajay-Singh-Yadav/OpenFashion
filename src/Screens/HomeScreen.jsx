@@ -26,14 +26,7 @@ import {useNavigation} from '@react-navigation/native';
 const HomeScreen = () => {
   const navigation = useNavigation();
 
-  const [userEmail, setUserEmail] = useState('');
-
   const user = auth().currentUser;
-
-  const handleLogOut = async () => {
-    await auth().signOut();
-    navigation.replace('Login');
-  };
 
   return (
     <View style={styles.Maincontainer}>
@@ -44,7 +37,7 @@ const HomeScreen = () => {
       />
       <SafeAreaView style={{flex: 1}}>
         {/* Header */}
-        <TopBarComp onPress={handleLogOut} />
+        <TopBarComp />
         {/* <Header /> */}
 
         <ScrollView style={{flex: 1}}>

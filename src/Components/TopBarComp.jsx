@@ -4,7 +4,7 @@ import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {useSelector} from 'react-redux';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 
-const TopBarComp = ({onPress}) => {
+const TopBarComp = () => {
   const navigation = useNavigation();
 
   const cartItems = useSelector(state => state.cart.items);
@@ -40,17 +40,6 @@ const TopBarComp = ({onPress}) => {
               </View>
             )}
           </View>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={onPress}
-          style={{
-            height: 30,
-            width: 30,
-            marginLeft: 10,
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}>
-          <AntDesign name="logout" size={24} color="black" />
         </TouchableOpacity>
       </View>
     </View>

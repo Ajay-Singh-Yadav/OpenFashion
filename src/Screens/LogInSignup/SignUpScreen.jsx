@@ -19,6 +19,7 @@ import ButtonComp from '../../Components/LoginSignComp/ButtonComp';
 import {useNavigation} from '@react-navigation/native';
 import auth from '@react-native-firebase/auth';
 import {SignUp} from '../../services/auth';
+import LottieView from 'lottie-react-native';
 
 const validationSchema = Yup.object().shape({
   fullName: Yup.string().required('Full Name is required'),
@@ -38,15 +39,17 @@ const validationSchema = Yup.object().shape({
 
 const SignUpScreen = () => {
   const navigation = useNavigation();
+  const [loading, setLoading] = useState(false);
 
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const handleSignUp = async (email, password, resetForm, navigation) => {
     try {
+      setLoading(true);
       const userCredential = await SignUp(email, password);
       resetForm();
-      navigation.navigate('Home');
+      // navigation.replace('Home');
     } catch (error) {
       Alert.alert('Registration Error', error.message);
     }
@@ -143,6 +146,25 @@ const SignUpScreen = () => {
               />
               {touched.confirmPassword && errors.confirmPassword && (
                 <Text style={styles.errorText}>{errors.confirmPassword}</Text>
+              )}
+            </View>
+
+            <View
+              style={{
+                alignItems: 'center',
+                justifyContent: 'center',
+                height: 20,
+                width: 100,
+                borderWidth: 1,
+                marginBottom: 20,
+              }}>
+              {loading && (
+                <LottieView
+                  source={require('../../assets/animation/Loader.json')}
+                  autoPlay
+                  loop
+                  style={{width: 100, height: 100}}
+                />
               )}
             </View>
 
