@@ -11,10 +11,12 @@ const TopBarComp = ({onPress}) => {
   const totalItems = cartItems.length;
   return (
     <View style={[styles.row, {margin: 20}]}>
-      <Image
-        source={require('../assets/images/Menu1.png')}
-        style={{height: 30, width: 30}}
-      />
+      <TouchableOpacity onPress={() => navigation.openDrawer()}>
+        <Image
+          source={require('../assets/images/Menu1.png')}
+          style={{height: 30, width: 30}}
+        />
+      </TouchableOpacity>
 
       <Image
         source={require('../assets/images/Logo1.png')}

@@ -28,6 +28,8 @@ const HomeScreen = () => {
 
   const [userEmail, setUserEmail] = useState('');
 
+  const user = auth().currentUser;
+
   const handleLogOut = async () => {
     await auth().signOut();
     navigation.replace('Login');
