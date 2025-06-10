@@ -9,20 +9,9 @@ import {
 } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 // import auth from '@react-native-firebase/auth';
+import LottieView from 'lottie-react-native';
 
 const SplashScreen = ({navigation}) => {
-  // useEffect(() => {
-  //   const unsubscribe = auth().onAuthStateChanged(user => {
-  //     if (user) {
-  //       navigation.replace('Home');
-  //     } else {
-  //       navigation.replace('Login');
-  //     }
-  //   });
-
-  //   return unsubscribe;
-  // }, []);
-
   return (
     <View style={styles.ParentContainer}>
       <StatusBar
@@ -43,6 +32,12 @@ const SplashScreen = ({navigation}) => {
               & ACCESSORIES{' '}
             </Text>
           </View>
+          <LottieView
+            source={require('../assets/animation/Loader.json')}
+            autoPlay
+            loop
+            style={{width: 150, height: 150, alignSelf: 'center'}}
+          />
         </SafeAreaView>
       </ImageBackground>
     </View>

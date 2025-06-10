@@ -9,26 +9,34 @@ import ProductDetailsScreen from '../Screens/ProductDetailsScreen';
 import ProductCartScreen from '../Screens/ProductCartScreen';
 import SignUpScreen from '../Screens/LogInSignup/SignUpScreen';
 import LogInScreen from '../Screens/LogInSignup/LogInScreen';
+import {retry} from '@reduxjs/toolkit/query';
 
 const Stack = createStackNavigator();
 
 export const AuthGate = () => {
   const [user, setUser] = useState(null);
-  const [initializing, setInitializing] = useState(true);
+  const [checkingAuth, setCheckingAuth] = useState(true);
 
   useEffect(() => {
-    const unsubscribe = auth().onAuthStateChanged(user => {
-      setUser(user);
-      if (initializing) setInitializing(false);
-    });
-    return unsubscribe;
-  }, []);
+    const timer = setTimeout(() => {
+      const unsubscribe = auth().onAuthStateChanged(user => {
+        setUser(user);
+        setCheckingAuth(false);
+      });
 
-  if (initializing) return <SplashScreen />;
+      return unsubscribe;
+    }, 3000);
+
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
     <Stack.Navigator screenOptions={{headerShown: false}}>
-      {user ? (
+      {checkingAuth ? (
+        <>
+          <Stack.Screen name="Splash" component={SplashScreen} />
+        </>
+      ) : user ? (
         <>
           <Stack.Screen name="Home" component={HomeScreen} />
           <Stack.Screen name="ListGrid" component={ProductListGridScreen} />
