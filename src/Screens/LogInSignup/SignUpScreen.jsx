@@ -155,7 +155,6 @@ const SignUpScreen = () => {
                 justifyContent: 'center',
                 height: 20,
                 width: 100,
-                borderWidth: 1,
                 marginBottom: 20,
               }}>
               {loading && (

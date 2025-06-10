@@ -39,6 +39,7 @@ export default function ProductListGridScreen() {
         </ImageBackground>
 
         <Text style={styles.brandText}>{item.brand}</Text>
+        <Text style={styles.ratingText}>⭐ {item.rating} Ratings</Text>
         <Text style={styles.nameText}>{item.name}</Text>
         <Text style={styles.priceText}>{item.price}</Text>
       </View>
@@ -121,9 +122,7 @@ export default function ProductListGridScreen() {
                 borderRadius: 30,
               }}>
               <Image
-                source={
-                  require('../assets/images/Filter.png') // Show List icon if in grid
-                }
+                source={require('../assets/images/Filter.png')}
                 style={[styles.toggleIcon, {width: 30, height: 30}]}
               />
             </View>
