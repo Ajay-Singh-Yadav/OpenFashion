@@ -1,5 +1,4 @@
 import {createStackNavigator} from '@react-navigation/stack';
-
 import auth from '@react-native-firebase/auth';
 import {useEffect, useState} from 'react';
 import SplashScreen from '../Screens/SplashScreen';
@@ -9,7 +8,6 @@ import ProductDetailsScreen from '../Screens/ProductDetailsScreen';
 import ProductCartScreen from '../Screens/ProductCartScreen';
 import SignUpScreen from '../Screens/LogInSignup/SignUpScreen';
 import LogInScreen from '../Screens/LogInSignup/LogInScreen';
-import {retry} from '@reduxjs/toolkit/query';
 
 const Stack = createStackNavigator();
 

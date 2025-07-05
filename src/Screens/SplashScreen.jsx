@@ -8,10 +8,9 @@ import {
   View,
 } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
-// import auth from '@react-native-firebase/auth';
 import LottieView from 'lottie-react-native';
 
-const SplashScreen = ({navigation}) => {
+const SplashScreen = () => {
   return (
     <View style={styles.ParentContainer}>
       <StatusBar

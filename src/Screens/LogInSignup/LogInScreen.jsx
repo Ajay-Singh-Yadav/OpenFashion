@@ -34,7 +34,6 @@ const LogInScreen = () => {
   const navigation = useNavigation();
 
   const [showPassword, setShowPassword] = useState(false);
-  const [message, setMessage] = useState('');
   const [loading, setLoading] = useState(false);
 
   const handleLogin = async (email, password, navigation, resetForm) => {
@@ -83,6 +82,7 @@ const LogInScreen = () => {
           <>
             <View style={styles.inputFormikContainer}>
               <InputComp
+                icon="mail"
                 placeholder="Email"
                 value={values.email}
                 onChangeText={handleChange('email')}

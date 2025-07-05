@@ -32,7 +32,7 @@ const ProductDetails = ({product}) => {
           shadowOffset: {width: 0, height: 2},
           shadowOpacity: 0.3,
           shadowRadius: 4,
-          overflow: 'hidden', // to clip image corners
+          overflow: 'hidden',
         }}>
         <Image
           source={product.image}

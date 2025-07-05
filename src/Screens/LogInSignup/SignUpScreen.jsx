@@ -17,7 +17,6 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import InputComp from '../../Components/LoginSignComp/InputComp';
 import ButtonComp from '../../Components/LoginSignComp/ButtonComp';
 import {useNavigation} from '@react-navigation/native';
-import auth from '@react-native-firebase/auth';
 import {SignUp} from '../../services/auth';
 import LottieView from 'lottie-react-native';
 
